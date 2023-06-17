@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,11 +43,12 @@
                     if (empty($email) || empty($password)) {
                         echo '<div class="alert alert-danger" role="alert">Please fill all the fields correctly</div>';
                     } 
-                    elseif (!$user->verify_credentials($email, $password)) {
+                    elseif (!$user->verifyCredentials($email, $password)) {
                         echo '<div class="alert alert-danger" role="alert">Invalid email or password</div>';
                     }
                     else {
-                        //echo '<div class="alert alert-success" role="alert">Success! You can now log in.</div>';
+                        $get_user_info = $user->getUserInfo($email);
+                        $_SESSION['user_info'] = $get_user_info;
                         header('Location: user-home.php');
                     }
                 }

@@ -9,7 +9,7 @@ class ClassUserQuery
         $this->dbConnection = $dbConnection;
     }
 
-    public function verify_credentials($email, $password)
+    public function verifyCredentials($email, $password)
     {
         $table_name = "users";
 
@@ -37,6 +37,28 @@ class ClassUserQuery
             return false;
         }
         return false;        
+    }
+
+    public function getUserInfo($email)
+    {
+        $table_name = "users";
+
+        $query = "SELECT
+                    email, name  
+                FROM
+                    " . $table_name . "
+                WHERE
+                    email = ?
+                LIMIT
+                    0,1";
+
+        $stmt = $this->dbConnection->prepare($query);
+        $stmt->bindParam(1, $email);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $row;
     }
 
 }
