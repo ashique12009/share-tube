@@ -10,6 +10,7 @@ $db_connection_object = $db_connection_object->getConnection();
 $create_tables        = new ClassCreateTable($db_connection_object);
 
 $create_tables->createDatabaseTables();
+$create_tables->seed();
 
 // ----------------------------------------------------------------
 ?>
