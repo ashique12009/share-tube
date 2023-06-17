@@ -9,19 +9,50 @@
 </head>
 <body>
     <div class="form-container">
-        <form class="form-signin">
-            <h1 class="h3 mb-3 font-weight-normal text-center">Please sign in</h1>
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-            <div class="checkbox mt-3 mb-3 text-center">
-                <label>
-                    <input type="checkbox" value="remember-me"> Remember me
-                </label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        </form>
+        <div class="container">
+            <form class="form-signin" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
+                <h1 class="h3 mb-3 font-weight-normal text-center">Please sign in</h1>
+                <label for="inputEmail" class="sr-only">Email address</label>
+                <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+                <div class="checkbox mt-3 mb-3 text-center">
+                    <label>
+                        <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Sign in</button>
+            </form>
+        </div>        
+
+        <div class="container little-container">
+            <?php 
+                require_once "../admin/db/class-db-config.php";
+                require_once "../admin/db/class-user-query.php";
+
+                $db_connection_object = new ClassDBConfig();
+                $db_connection_object = $db_connection_object->getConnection();
+
+                $user = new ClassUserQuery($db_connection_object);
+            ?>
+            <?php 
+                if (isset($_POST['submit'])) {
+                    $email    = $_POST['email'];
+                    $password = $_POST['password'];
+                    if (empty($email) || empty($password)) {
+                        echo '<div class="alert alert-danger" role="alert">Please fill all the fields correctly</div>';
+                    } 
+                    elseif (!$user->verify_credentials($email, $password)) {
+                        echo '<div class="alert alert-danger" role="alert">Invalid email or password</div>';
+                    }
+                    else {
+                        //echo '<div class="alert alert-success" role="alert">Success! You can now log in.</div>';
+                        header('Location: user-home.php');
+                    }
+                }
+            ?>
+        </div>
+        
     </div>
 </body>
 </html>

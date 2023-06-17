@@ -194,10 +194,6 @@ class ClassCreateTable
         {
             return true;
         }
-        else
-        {
-            return false;
-        }
-
+        return false;
     }
 }
