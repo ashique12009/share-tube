@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/bootstrap4.min.css">
     <link rel="stylesheet" href="../assets/css/custom.css">
-    <title>User sign in</title>
+    <title>Admin sign in</title>
 </head>
 <body>
     <div class="form-container">
@@ -30,13 +30,13 @@
 
         <div class="container little-container">
             <?php 
-                require_once "../admin/db/class-db-config.php";
-                require_once "../admin/db/class-user-query.php";
+                require_once "db/class-db-config.php";
+                require_once "db/class-admin-query.php";
 
                 $db_connection_object = new ClassDBConfig();
                 $db_connection_object = $db_connection_object->getConnection();
 
-                $user = new ClassUserQuery($db_connection_object);
+                $user = new ClassAdminQuery($db_connection_object);
             ?>
             <?php 
                 if (isset($_POST['submit'])) {
@@ -45,13 +45,13 @@
                     if (empty($email) || empty($password)) {
                         echo '<div class="alert alert-danger" role="alert">Please fill all the fields correctly</div>';
                     } 
-                    elseif (!$user->verifyUserCredentials($email, $password)) {
+                    elseif (!$user->verifyAdminCredentials($email, $password)) {
                         echo '<div class="alert alert-danger" role="alert">Invalid email or password</div>';
                     }
                     else {
-                        $get_user_info = $user->getUserInfo($email);
+                        $get_user_info = $user->getAdminInfo($email);
                         $_SESSION['user_info'] = $get_user_info;
-                        header('Location: user-home.php');
+                        header('Location: admin-home.php');
                     }
                 }
             ?>
