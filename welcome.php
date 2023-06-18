@@ -1,9 +1,6 @@
 <body>
-    <div class="container">
-        <h1 class="text-center">Welcome to video sharing app</h1>
-    </div>
-
-    <div class="container">
+    
+    <div class="container mt-5rem">
         <div class="cards-grid-container">
             <div class="card" style="width: 18rem;">
                 <img src="assets/images/nopic.png" class="card-img-top" alt="">

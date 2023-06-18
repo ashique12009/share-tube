@@ -33,21 +33,28 @@ body{
     background-color: #f5f5f5;
     height: 100vh;
 }
-.form-signin {
+.form-signin{
     width: 100%;
     max-width: 330px;
     padding: 15px;
     margin: auto;
 }
-.form-signin .form-control {
+.form-signin .form-control{
     position: relative;
     box-sizing: border-box;
     height: auto;
     padding: 10px;
     font-size: 16px;
 }
+.custom-navbar .form-inline .form-control{
+    width: 500px;
+}
 
 /* Common */
 .little-container{
     width: 350px;
+}
+
+.mt-5rem{
+    margin-top: 5rem;
 }

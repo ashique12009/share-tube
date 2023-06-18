@@ -43,7 +43,7 @@
                     if (empty($email) || empty($password)) {
                         echo '<div class="alert alert-danger" role="alert">Please fill all the fields correctly</div>';
                     } 
-                    elseif (!$user->verifyCredentials($email, $password)) {
+                    elseif (!$user->verifyUserCredentials($email, $password)) {
                         echo '<div class="alert alert-danger" role="alert">Invalid email or password</div>';
                     }
                     else {

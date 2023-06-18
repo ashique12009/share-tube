@@ -101,7 +101,7 @@ class ClassCreateTable
         }
     }
 
-    public function seed()
+    public function seedAdmin()
     {
         $table_name = "users";
 
@@ -119,10 +119,50 @@ class ClassCreateTable
 
             $stmt = $this->dbConnection->prepare($query);
 
-            // posted values
             $role_id  = 1;
             $name     = htmlspecialchars(strip_tags('Admin'));
             $email    = htmlspecialchars(strip_tags('admin@test.com'));
+            $password = password_hash('admin12009', PASSWORD_DEFAULT);
+
+            // to get time-stamp for 'created' field
+            $timestamp = date('Y-m-d H:i:s');
+
+            // bind values
+            $stmt->bindParam(":role_id", $role_id);
+            $stmt->bindParam(":name", $name);
+            $stmt->bindParam(":email", $email);
+            $stmt->bindParam(":password", $password);
+            $stmt->bindParam(":created_at", $timestamp);
+
+            if ($stmt->execute())
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public function seedUser()
+    {
+        $table_name = "users";
+
+        // Check admin user is exists or not, if exists then do not insert again.
+        if (!$this->isUserExists())
+        {
+            // Insert roles into database
+            $this->insertRoles();
+
+            // Insert admin user into database
+            $query = "INSERT INTO
+            " . $table_name . "
+            SET
+            role_id=:role_id, name=:name, email=:email, password=:password, created_at=:created_at";
+
+            $stmt = $this->dbConnection->prepare($query);
+
+            $role_id  = 2;
+            $name     = htmlspecialchars(strip_tags('User'));
+            $email    = htmlspecialchars(strip_tags('user@test.com'));
             $password = password_hash('admin12009', PASSWORD_DEFAULT);
 
             // to get time-stamp for 'created' field
@@ -174,6 +214,33 @@ class ClassCreateTable
     {
         $table_name = "users";
         $email      = "admin@test.com";
+
+        $query = "SELECT
+                    email
+                FROM
+                    " . $table_name . "
+                WHERE
+                    email = ?
+                LIMIT
+                    0,1";
+
+        $stmt = $this->dbConnection->prepare($query);
+        $stmt->bindParam(1, $email);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private function isUserExists()
+    {
+        $table_name = "users";
+        $email      = "user@test.com";
 
         $query = "SELECT
                     email

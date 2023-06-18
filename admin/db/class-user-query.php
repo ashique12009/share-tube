@@ -9,21 +9,25 @@ class ClassUserQuery
         $this->dbConnection = $dbConnection;
     }
 
-    public function verifyCredentials($email, $password)
+    public function verifyUserCredentials($email, $password)
     {
         $table_name = "users";
+        $role_id = 2;
 
         $query = "SELECT
                     email, password 
                 FROM
                     " . $table_name . "
                 WHERE
-                    email = ?
+                    email = ? 
+                AND 
+                    role_id = ?
                 LIMIT
                     0,1";
 
         $stmt = $this->dbConnection->prepare($query);
         $stmt->bindParam(1, $email);
+        $stmt->bindParam(2, $role_id);
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -42,6 +46,7 @@ class ClassUserQuery
     public function getUserInfo($email)
     {
         $table_name = "users";
+        $role_id = 2;
 
         $query = "SELECT
                     email, name  
@@ -49,11 +54,14 @@ class ClassUserQuery
                     " . $table_name . "
                 WHERE
                     email = ?
+                AND 
+                    role_id = ?
                 LIMIT
                     0,1";
 
         $stmt = $this->dbConnection->prepare($query);
         $stmt->bindParam(1, $email);
+        $stmt->bindParam(2, $role_id);
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
