@@ -1,5 +1,7 @@
 <?php
 // ----------------------------------------------------------------
+$site_url = 'http://php-video-sharing-app.local';
+define("SITE_URL", $site_url);
 $page_title = 'Welcome to video sharing app';
 
 require_once "admin/db/class-db-config.php";
