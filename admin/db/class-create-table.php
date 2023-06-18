@@ -122,7 +122,7 @@ class ClassCreateTable
             $role_id  = 1;
             $name     = htmlspecialchars(strip_tags('Admin'));
             $email    = htmlspecialchars(strip_tags('admin@test.com'));
-            $password = password_hash('admin12009', PASSWORD_DEFAULT);
+            $password = password_hash('admin123', PASSWORD_DEFAULT);
 
             // to get time-stamp for 'created' field
             $timestamp = date('Y-m-d H:i:s');
@@ -163,7 +163,7 @@ class ClassCreateTable
             $role_id  = 2;
             $name     = htmlspecialchars(strip_tags('User'));
             $email    = htmlspecialchars(strip_tags('user@test.com'));
-            $password = password_hash('admin12009', PASSWORD_DEFAULT);
+            $password = password_hash('user123', PASSWORD_DEFAULT);
 
             // to get time-stamp for 'created' field
             $timestamp = date('Y-m-d H:i:s');

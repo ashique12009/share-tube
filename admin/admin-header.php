@@ -8,13 +8,16 @@
         define("SITE_URL", $site_url);
 
         $haystack = $_SERVER['REQUEST_URI'];
-        $needle   = 'user-video-upload';
 
         $active_page = '';
 
-        if (strpos($haystack, $needle) !== false) 
+        if (strpos($haystack, 'admin-video-upload') !== false) 
         {
             $active_page = 'upload';
+        }
+        elseif (strpos($haystack, 'category-crud') !== false)
+        {
+            $active_page = 'category';
         }
         else 
         {
@@ -45,7 +48,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
                 <li class="nav-item <?php echo ($active_page == 'home') ? 'active' : '';?>"><a class="nav-link" href="<?php echo SITE_URL . '/admin/admin-home.php';?>">Home</a></li>
-                <li class="nav-item <?php echo ($active_page == 'upload') ? 'active' : '';?>"><a class="nav-link" href="<?php echo SITE_URL . '/admin/admin-video-upload.php';?>">Upload</a></li>
+                <li class="nav-item <?php echo ($active_page == 'upload') ? 'active' : '';?>"><a class="nav-link" href="<?php echo SITE_URL . '/admin/admin-category-crud.php';?>">Category</a></li>
+                <li class="nav-item <?php echo ($active_page == 'category') ? 'active' : '';?>"><a class="nav-link" href="<?php echo SITE_URL . '/admin/admin-video-upload.php';?>">Upload</a></li>
             </ul>
             <form class="form-inline my-2 my-lg-0 mx-auto">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
