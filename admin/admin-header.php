@@ -11,7 +11,7 @@
 
         $active_page = '';
 
-        if (strpos($haystack, 'admin-video-upload') !== false) 
+        if (strpos($haystack, 'admin-approve-video') !== false) 
         {
             $active_page = 'upload';
         }
@@ -49,7 +49,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item <?php echo ($active_page == 'home') ? 'active' : '';?>"><a class="nav-link" href="<?php echo SITE_URL . '/admin/admin-home.php';?>">Home</a></li>
                 <li class="nav-item <?php echo ($active_page == 'category') ? 'active' : '';?>"><a class="nav-link" href="<?php echo SITE_URL . '/admin/admin-category-crud.php';?>">Category</a></li>
-                <li class="nav-item <?php echo ($active_page == 'upload') ? 'active' : '';?>"><a class="nav-link" href="<?php echo SITE_URL . '/admin/admin-video-upload.php';?>">Upload</a></li>
+                <li class="nav-item <?php echo ($active_page == 'upload') ? 'active' : '';?>"><a class="nav-link" href="<?php echo SITE_URL . '/admin/admin-approve-video.php';?>">Approve video</a></li>
             </ul>
             <form class="form-inline my-2 my-lg-0 mx-auto">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

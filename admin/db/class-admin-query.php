@@ -146,7 +146,7 @@ class ClassAdminQuery
         {
             return $row;
         }
-        return false;
+        return [];
     }
 
     public function deleteCategory($id)
@@ -164,6 +164,54 @@ class ClassAdminQuery
         else
         {
             return false;
+        }
+    }
+
+    public function getCategoryName($cat_id)
+    {
+        $table_name = "categories";
+
+        $query = "SELECT
+                    id, name
+                FROM
+                    " . $table_name . "
+                WHERE 
+                    id = ?
+                LIMIT
+                    0,10";
+
+        $stmt = $this->dbConnection->prepare($query);
+        $stmt->bindParam(1, $cat_id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row)
+        {
+            return $row;
+        }
+        return '';
+    }
+
+    function updateCategory($cat_id, $cat_name)
+    {
+        $table_name = "categories";
+        try {
+            $query = "UPDATE $table_name SET name=:name WHERE id=:cat_id LIMIT 1";
+            $statement = $this->dbConnection->prepare($query);
+            $statement->bindParam(':name', $cat_name);
+            $statement->bindParam(':cat_id', $cat_id, PDO::PARAM_INT);
+            $query_execute = $statement->execute();
+    
+            if ($query_execute)
+            {
+                return true;
+            }
+            return false;  
+        } 
+        catch(PDOException $e) 
+        {
+            echo $e->getMessage();
         }
     }
 

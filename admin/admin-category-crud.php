@@ -1,20 +1,55 @@
 <?php
 $page_title = 'Admin category crud'; 
 require_once 'admin-header.php';
+
+require_once "db/class-db-config.php";
+require_once "db/class-admin-query.php";
+
+$db_connection_object = new ClassDBConfig();
+$db_connection_object = $db_connection_object->getConnection();
+
+$admin = new ClassAdminQuery($db_connection_object);
 ?>
     <div class="container mt-5">
-        <div class="card">
-            <div class="card-header">Category</div>
-            <div class="card-body">
-                <form class="mb-3" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="cname">Category name</label>
-                        <input type="text" class="form-control" id="cname" name="cname">
-                    </div>
-                    <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-                </form>
+        
+        <?php 
+            $operation  = isset($_GET['operation']) ? $_GET['operation'] : '';
+            $cat_id     = isset($_GET['id']) ? $_GET['id'] : '';
+            if ($operation == 'edit' && is_numeric($cat_id)) 
+            {
+                $cat_data = $admin->getCategoryName($cat_id);
+            }
+        ?>
+
+        <?php if ($operation == 'edit' && is_numeric($cat_id)): ?>
+            <div class="card">
+                <div class="card-header">Category</div>
+                <div class="card-body">
+                    <form class="mb-3" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="cname">Category name</label>
+                            <input type="text" class="form-control" id="cname" name="cname" value="<?php echo $cat_data['name'];?>">
+                            <input type="hidden" name="cat_id" value="<?php echo $cat_data['id'];?>">
+                        </div>
+                        <button type="submit" name="submit-edit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
             </div>
-        </div>
+        <?php else : ?>
+            <div class="card">
+                <div class="card-header">Category</div>
+                <div class="card-body">
+                    <form class="mb-3" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="cname">Category name</label>
+                            <input type="text" class="form-control" id="cname" name="cname">
+                        </div>
+                        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        <?php endif;?>
+        
     </div>
 
     <div class="container mt-5">
@@ -22,14 +57,6 @@ require_once 'admin-header.php';
             <div class="card-header">Category list</div>
             <div class="card-body">
                 <?php 
-                    require_once "db/class-db-config.php";
-                    require_once "db/class-admin-query.php";
-
-                    $db_connection_object = new ClassDBConfig();
-                    $db_connection_object = $db_connection_object->getConnection();
-
-                    $admin = new ClassAdminQuery($db_connection_object);
-
                     if (isset($_POST['submit']))
                     {
                         $cat_name = $_POST['cname'];
@@ -40,6 +67,32 @@ require_once 'admin-header.php';
                         else 
                         {
                             echo '<div class="alert alert-danger" role="alert">Category <b>'.$cat_name.'</b> has not been added.</div>';
+                        }
+                    }
+
+                    $operation  = isset($_GET['operation']) ? $_GET['operation'] : '';
+                    $cat_id     = isset($_GET['id']) ? $_GET['id'] : '';
+
+                    if ($operation == 'delete' && is_numeric($cat_id))
+                    {
+                        $admin->deleteCategory($cat_id);
+                    }
+
+                    $get_category_list = $admin->getCategories();
+                ?>
+
+                <?php 
+                    if (isset($_POST['submit-edit']))
+                    {
+                        $cat_name = $_POST['cname'];
+                        $cat_id = $_POST['cat_id'];
+                        if ($admin->updateCategory($cat_id, $cat_name))
+                        {
+                            echo '<div class="alert alert-success" role="alert">Category <b>'.$cat_name.'</b> has been updated successfully.</div>';
+                        }
+                        else 
+                        {
+                            echo '<div class="alert alert-danger" role="alert">Category <b>'.$cat_name.'</b> has not been updated.</div>';
                         }
                     }
 
