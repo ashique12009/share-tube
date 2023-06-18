@@ -1,7 +1,8 @@
 <?php 
     session_start();
 
-    if (isset($_SESSION['user_info'])) {
+    if (isset($_SESSION['user_info'])) 
+    {
         $user_info = $_SESSION['user_info'];
         $site_url = 'http://php-video-sharing-app.local';
         define("SITE_URL", $site_url);
@@ -11,14 +12,17 @@
 
         $active_page = '';
 
-        if (strpos($haystack, $needle) !== false) {
+        if (strpos($haystack, $needle) !== false) 
+        {
             $active_page = 'upload';
         }
-        else {
+        else 
+        {
             $active_page = 'home';
         }
     }
-    else {
+    else 
+    {
         header('Location: login.php');
     }
 ?>
