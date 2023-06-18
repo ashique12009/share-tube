@@ -126,4 +126,27 @@ class ClassAdminQuery
         return false;
     }
 
+    public function getCategories() 
+    {
+        $table_name = "categories";
+
+        $query = "SELECT
+                    id, name
+                FROM
+                    " . $table_name . "
+                LIMIT
+                    0,10";
+
+        $stmt = $this->dbConnection->prepare($query);
+        $stmt->execute();
+
+        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($row)
+        {
+            return $row;
+        }
+        return false;
+    }
+
 }

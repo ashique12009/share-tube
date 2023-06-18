@@ -42,21 +42,17 @@ require_once 'admin-header.php';
                             echo '<div class="alert alert-danger" role="alert">Category <b>'.$cat_name.'</b> has not been added.</div>';
                         }
                     }
+
+                    $get_category_list = $admin->getCategories();
                 ?>
 
                 <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Cras justo odio
-                        <span class="badge badge-primary badge-pill">14</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Dapibus ac facilisis in
-                        <span class="badge badge-primary badge-pill">2</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Morbi leo risus
-                        <span class="badge badge-primary badge-pill">1</span>
-                    </li>
+                    <?php foreach ($get_category_list as $value) : ?>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <?php echo $value['name'];?>
+                            <span class="badge badge-primary badge-pill"><?php echo $value['id'];?></span>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         </div>
