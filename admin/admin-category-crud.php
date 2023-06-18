@@ -43,6 +43,14 @@ require_once 'admin-header.php';
                         }
                     }
 
+                    $operation  = isset($_GET['operation']) ? $_GET['operation'] : '';
+                    $cat_id     = isset($_GET['id']) ? $_GET['id'] : '';
+
+                    if ($operation == 'delete' && is_numeric($cat_id))
+                    {
+                        $admin->deleteCategory($cat_id);
+                    }
+
                     $get_category_list = $admin->getCategories();
                 ?>
 

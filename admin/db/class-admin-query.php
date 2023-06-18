@@ -149,4 +149,22 @@ class ClassAdminQuery
         return false;
     }
 
+    public function deleteCategory($id)
+    {
+        $table_name = "categories";
+        $query = "DELETE FROM " . $table_name . " WHERE id = ?";
+
+        $stmt = $this->dbConnection->prepare($query);
+        $stmt->bindParam(1, $id);
+
+        if ($stmt->execute())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }
