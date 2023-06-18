@@ -50,7 +50,10 @@ require_once 'admin-header.php';
                     <?php foreach ($get_category_list as $value) : ?>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <?php echo $value['name'];?>
-                            <span class="badge badge-primary badge-pill"><?php echo $value['id'];?></span>
+                            <span class="badge badge-light badge-pill">
+                                <a href=<?php echo "?operation=edit&id=" . $value['id'];?>>EDIT</a> | 
+                                <a href=<?php echo "?operation=delete&id=" . $value['id'];?>>DELETE</a>
+                            </span>
                         </li>
                     <?php endforeach; ?>
                 </ul>
