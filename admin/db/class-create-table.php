@@ -150,9 +150,6 @@ class ClassCreateTable
         // Check admin user is exists or not, if exists then do not insert again.
         if (!$this->isUserExists())
         {
-            // Insert roles into database
-            $this->insertRoles();
-
             // Insert admin user into database
             $query = "INSERT INTO
             " . $table_name . "
