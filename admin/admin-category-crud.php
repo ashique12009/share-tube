@@ -77,8 +77,6 @@ $admin = new ClassAdminQuery($db_connection_object);
                     {
                         $admin->deleteCategory($cat_id);
                     }
-
-                    $get_category_list = $admin->getCategories();
                 ?>
 
                 <?php 
@@ -94,14 +92,6 @@ $admin = new ClassAdminQuery($db_connection_object);
                         {
                             echo '<div class="alert alert-danger" role="alert">Category <b>'.$cat_name.'</b> has not been updated.</div>';
                         }
-                    }
-
-                    $operation  = isset($_GET['operation']) ? $_GET['operation'] : '';
-                    $cat_id     = isset($_GET['id']) ? $_GET['id'] : '';
-
-                    if ($operation == 'delete' && is_numeric($cat_id))
-                    {
-                        $admin->deleteCategory($cat_id);
                     }
 
                     $get_category_list = $admin->getCategories();

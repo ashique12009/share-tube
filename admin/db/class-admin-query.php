@@ -152,19 +152,51 @@ class ClassAdminQuery
     public function deleteCategory($id)
     {
         $table_name = "categories";
-        $query = "DELETE FROM " . $table_name . " WHERE id = ?";
 
-        $stmt = $this->dbConnection->prepare($query);
-        $stmt->bindParam(1, $id);
-
-        if ($stmt->execute())
-        {
-            return true;
-        }
-        else
+        // Check if category exists in videos table
+        if ($this->isCategoryExistsInVideo($id)) 
         {
             return false;
         }
+        else
+        {
+            $query = "DELETE FROM " . $table_name . " WHERE id = ?";
+
+            $stmt = $this->dbConnection->prepare($query);
+            $stmt->bindParam(1, $id);
+
+            if ($stmt->execute())
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    private function isCategoryExistsInVideo($category_id)
+    {
+        $table_name = "videos";
+
+        $query = "SELECT
+                    name
+                FROM
+                    " . $table_name . "
+                WHERE
+                    category_id = ?
+                LIMIT
+                    0,1";
+
+        $stmt = $this->dbConnection->prepare($query);
+        $stmt->bindParam(1, $category_id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row)
+        {
+            return true;
+        }
+        return false;
     }
 
     public function getCategoryName($cat_id)
