@@ -1,3 +1,17 @@
+<?php 
+    session_start();
+
+    if (isset($_SESSION['user_info'])) 
+    {
+        $user_info = $_SESSION['user_info'];
+        $site_url  = 'http://php-video-sharing-app.local';
+        $role_id   = $user_info['id'];
+    }
+    else 
+    {
+        $user_info = '';
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,22 +28,29 @@
 
 <div class="container-fluid">
     <nav class="navbar fixed-top navbar-expand-lg navbar navbar-dark bg-dark custom-navbar">
-        <a class="navbar-brand" href="#">ShareTube</a>
+        <a class="navbar-brand" href="<?php echo $site_url;?>">ShareTube</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
-                <li class="nav-item active"><a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a></li>
+                <?php if ($role_id == 1) :?>
+                    <li class="nav-item active"><a class="nav-link" href="<?php echo $site_url . '/admin/admin-home.php';?>">Home <span class="sr-only">(current)</span></a></li>
+                <?php else :?>
+                    <li class="nav-item active"><a class="nav-link" href="<?php echo $site_url . '/user/user-home.php';?>">Home <span class="sr-only">(current)</span></a></li>
+                <?php endif;?>
                 <li class="nav-item"><a class="nav-link" href="#">Category</a></li>
-                </li>
             </ul>
             <form class="form-inline my-2 my-lg-0 mx-auto">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             </form>
             <ul class="navbar-nav">
-                <li class="nav-item"><a href="user/login.php" class="nav-link">Sign in</a></li>
+                <?php if ($user_info == "") :?>
+                    <li class="nav-item"><a href="user/login.php" class="nav-link">Sign in</a></li>
+                <?php else :?>
+                    <li class="nav-item"><a href="logout.php" class="nav-link">Sign out</a></li>
+                <?php endif;?>
             </ul>
         </div>
     </nav>

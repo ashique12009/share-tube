@@ -93,7 +93,8 @@ class ClassCreateTable
             `created_at` datetime NOT NULL,
             `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (`id`),
-            FOREIGN KEY (`category_id`) REFERENCES categories(`id`) ON DELETE CASCADE
+            FOREIGN KEY (`category_id`) REFERENCES categories(`id`) ON DELETE CASCADE,
+            FOREIGN KEY (`user_id`) REFERENCES users(`id`) ON DELETE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
         if ($this->dbConnection->query($sqlVideoTable) === FALSE)

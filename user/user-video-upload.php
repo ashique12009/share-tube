@@ -51,7 +51,7 @@ $user_info = $_SESSION['user_info'];
 
                 $title  = $_POST['title'];
                 $desc   = $_POST['desc'];
-                $cat_id = $_POST['cat_id'];
+                $cat_id = isset($_POST['cat_id']) ? $_POST['cat_id'] : '';
 
                 // Check file size is not bigger than 2MB
                 if ($_FILES["vfile"]["size"] > 2097152) 
@@ -113,8 +113,7 @@ $user_info = $_SESSION['user_info'];
                         else 
                         {
                             echo '<div class="alert alert-danger" role="alert">Sorry, insertion failed.</div>';
-                        }
-                        
+                        }                        
                     } 
                     else 
                     {
