@@ -136,4 +136,32 @@ class ClassUserQuery
         return [];
     }
 
+    public function uploadThumbnail($file) 
+    {
+        $target_dir    = "uploads/thumbnails/";
+        $file_name     = round(microtime(true)) . '-' . basename($file["name"]);
+        $target_file   = $target_dir . $file_name;
+        $uploadOk      = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        // Check file size is not bigger than 2MB
+        if ($file["size"] > 2097152) 
+        {
+            $uploadOk = 2;
+        }
+        elseif ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") // Allow certain file formats
+        {
+            $uploadOk = 3;
+        }
+        else 
+        {
+            if (!move_uploaded_file($file["tmp_name"], $target_file)) 
+            {
+                $uploadOk = 4;              
+            }
+        }
+
+        return $uploadOk;
+    }
+
 }

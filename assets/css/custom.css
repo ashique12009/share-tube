@@ -12,6 +12,9 @@ body{
 }
 .cards-grid-container .card .card-img-top{
     border-radius: 5px;
+    object-fit: cover;
+    width: 350px;
+    height: 210px;
 }
 .cards-grid-container .card .card-description{
     overflow: hidden;

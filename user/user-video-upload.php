@@ -34,6 +34,10 @@ $user_info = $_SESSION['user_info'];
                 </select>
             </div>
             <div class="form-group">
+                <label for="vtfile">Thumbnail</label>
+                <input type="file" class="form-control-file" id="vtfile" name="vtfile">
+            </div>
+            <div class="form-group">
                 <label for="vfile">Video file</label>
                 <input type="file" class="form-control-file" id="vfile" name="vfile">
             </div>
@@ -43,8 +47,14 @@ $user_info = $_SESSION['user_info'];
         <?php
             if (isset($_POST['submit']))
             {
+                // ------------------------------THUMBNAIL FILE----------------------------------
+                $thumb_file_name = round(microtime(true)) . '-' . basename($_FILES["vtfile"]["name"]);
+                $uploadOk        = $user->uploadThumbnail($_FILES["vtfile"]);
+                // ------------------------------------------------------------------------------
+
                 $target_dir    = "uploads/videos/";
-                $target_file   = $target_dir . basename($_FILES["vfile"]["name"]);
+                $file_name     = round(microtime(true)) . '-' . basename($_FILES["vfile"]["name"]);
+                $target_file   = $target_dir . $file_name;
                 $uploadOk      = 1;
                 $inputError    = 1;
                 $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -84,26 +94,27 @@ $user_info = $_SESSION['user_info'];
                 {
                     echo '<div class="alert alert-danger" role="alert">Sorry, only mp4 file is allowed.</div>';
                 }
+                elseif ($uploadOk == 4)
+                {
+                    echo '<div class="alert alert-danger" role="alert">Sorry, upload failed.</div>';
+                }
                 elseif ($inputError == 2)
                 {
                     echo '<div class="alert alert-danger" role="alert">Sorry, input missing.</div>';
                 }
                 else 
                 {
-                    $temp          = explode(".", $_FILES["vfile"]["name"]);
-                    $new_file_name = round(microtime(true)) . '.' . end($temp);
-                    $thumb         = "";
-                    $user_id       = $user_info['id'];
+                    $user_id = $user_info['id'];
 
-                    if (move_uploaded_file($_FILES["vfile"]["tmp_name"], $new_file_name)) 
+                    if (move_uploaded_file($_FILES["vfile"]["tmp_name"], $target_file)) 
                     {
                         // Insert video info to database
                         $data = [
                             'title'   => $title,
                             'desc'    => $desc,
                             'cat_id'  => $cat_id,
-                            'thumb'   => $thumb,
-                            'vfile'   => $new_file_name,
+                            'thumb'   => $thumb_file_name,
+                            'vfile'   => $file_name,
                             'user_id' => $user_id,
                         ];
                         if ($user->insertVideo($data))

@@ -247,4 +247,51 @@ class ClassAdminQuery
         }
     }
 
+    public function getVideos()
+    {
+        $table_name = "videos";
+
+        $query = "SELECT
+                    id, user_id, title, description, video_link, thumbnail, category_id 
+                FROM
+                    " . $table_name . " 
+                ORDER BY id DESC 
+                LIMIT
+                    0,10";
+
+        $stmt = $this->dbConnection->prepare($query);
+        $stmt->execute();
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($rows)
+        {
+            return $rows;
+        }
+        return [];
+    }
+
+    public function getRecentCategories()
+    {
+        $table_name = "categories";
+
+        $query = "SELECT
+                    id, name
+                FROM
+                    " . $table_name . "
+                ORDER BY id DESC 
+                LIMIT
+                    0,3";
+
+        $stmt = $this->dbConnection->prepare($query);
+        $stmt->execute();
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($rows)
+        {
+            return $rows;
+        }
+        return [];
+    }
 }

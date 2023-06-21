@@ -9,6 +9,7 @@
     }
     else 
     {
+        $role_id = 0;
         $user_info = '';
     }
 ?>
@@ -37,10 +38,24 @@
             <ul class="navbar-nav">
                 <?php if ($role_id == 1) :?>
                     <li class="nav-item active"><a class="nav-link" href="<?php echo $site_url . '/admin/admin-home.php';?>">Home <span class="sr-only">(current)</span></a></li>
-                <?php else :?>
+                <?php elseif ($role_id == 2) :?>
                     <li class="nav-item active"><a class="nav-link" href="<?php echo $site_url . '/user/user-home.php';?>">Home <span class="sr-only">(current)</span></a></li>
                 <?php endif;?>
-                <li class="nav-item"><a class="nav-link" href="#">Category</a></li>
+
+                <?php 
+                    // Get recent 3 categories
+                    require_once "admin/db/class-db-config.php";
+                    require_once "admin/db/class-admin-query.php";
+
+                    $db_connection_object = new ClassDBConfig();
+                    $db_connection_object = $db_connection_object->getConnection();
+
+                    $admin = new ClassAdminQuery($db_connection_object);
+                    $categories = $admin->getRecentCategories();
+                ?>
+                <?php foreach($categories as $cat) : ?>
+                    <li class="nav-item"><a class="nav-link" href="#"><?php echo $cat['name'];?></a></li>
+                <?php endforeach; ?>
             </ul>
             <form class="form-inline my-2 my-lg-0 mx-auto">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
