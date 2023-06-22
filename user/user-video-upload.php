@@ -49,7 +49,7 @@ $user_info = $_SESSION['user_info'];
             {
                 // ------------------------------THUMBNAIL FILE----------------------------------
                 $thumb_file_name = round(microtime(true)) . '-' . basename($_FILES["vtfile"]["name"]);
-                $uploadOk        = $user->uploadThumbnail($_FILES["vtfile"]);
+                $thumbUploadOk   = $user->uploadThumbnail($_FILES["vtfile"]);
                 // ------------------------------------------------------------------------------
 
                 $target_dir    = "uploads/videos/";
@@ -67,7 +67,7 @@ $user_info = $_SESSION['user_info'];
                 if ($_FILES["vfile"]["size"] > 2097152) 
                 {
                     $uploadOk = 2;
-                }
+                }                
 
                 // Allow certain file formats
                 if ($imageFileType != "mp4") 
@@ -86,7 +86,7 @@ $user_info = $_SESSION['user_info'];
                 }
 
                 // Check if $uploadOk is 1
-                if ($uploadOk == 2) 
+                if ($uploadOk == 2 || $thumbUploadOk == 2) 
                 {
                     echo '<div class="alert alert-danger" role="alert">Sorry, your file is too large.</div>';
                 } 

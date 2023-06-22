@@ -5,7 +5,7 @@
     {
         $user_info = $_SESSION['user_info'];
         $site_url  = 'http://php-video-sharing-app.local';
-        $role_id   = $user_info['id'];
+        $role_id   = $user_info['role_id'];
     }
     else 
     {

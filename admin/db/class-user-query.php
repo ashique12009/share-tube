@@ -49,7 +49,7 @@ class ClassUserQuery
         $role_id    = 2;
 
         $query = "SELECT
-                    id, email, name
+                    id, role_id, email, name
                 FROM
                     " . $table_name . "
                 WHERE
@@ -110,7 +110,7 @@ class ClassUserQuery
         catch (Exception $e) 
         {
             return false;
-        }        
+        }    
     }
 
     public function getCategories()
@@ -164,4 +164,80 @@ class ClassUserQuery
         return $uploadOk;
     }
 
+    public function getVideos($user_id)
+    {
+        $table_name = "videos";
+
+        $query = "SELECT
+                    id, user_id, title, description, video_link, thumbnail, category_id 
+                FROM
+                    " . $table_name . " 
+                WHERE user_id = $user_id 
+                ORDER BY id DESC 
+                LIMIT
+                    0,10";
+
+        $stmt = $this->dbConnection->prepare($query);
+        $stmt->execute();
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($rows)
+        {
+            return $rows;
+        }
+        return [];
+    }
+
+    public function insertUser($name, $email, $password)
+    {
+        if ($name !== "" && $email !== "" && $password !== "")
+        {
+            $user_info = $this->getUserInfo($email);
+            if ($user_info === false)
+            {
+                $table_name = "users";
+
+                try 
+                {
+                    // Insert user into database
+                    $query = "INSERT INTO
+                    " . $table_name . "
+                    SET 
+                    role_id=:role_id, name=:name, email=:email, password=:password, created_at=:created_at";
+
+                    $stmt = $this->dbConnection->prepare($query);
+
+                    $role_id  = 2;
+                    $name     = htmlspecialchars(strip_tags($name));
+                    $email    = htmlspecialchars(strip_tags($email));
+                    $password = password_hash($password, PASSWORD_DEFAULT);
+
+                    // to get time-stamp for 'created' field
+                    $timestamp = date('Y-m-d H:i:s');
+
+                    // bind values
+                    $stmt->bindParam(":role_id", $role_id);
+                    $stmt->bindParam(":name", $name);
+                    $stmt->bindParam(":email", $email);
+                    $stmt->bindParam(":password", $password);
+                    $stmt->bindParam(":created_at", $timestamp);
+
+                    if ($stmt->execute())
+                    {
+                        return true;
+                    }
+                    return false;
+                } 
+                catch (Exception $e) 
+                {
+                    return false;
+                }
+            }
+        }
+        else 
+        {
+            return false;
+        }
+    }
 }

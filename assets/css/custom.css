@@ -16,6 +16,13 @@ body{
     width: 350px;
     height: 210px;
 }
+.cards-grid-container .card .card-title{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
 .cards-grid-container .card .card-description{
     overflow: hidden;
     text-overflow: ellipsis;
