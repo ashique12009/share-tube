@@ -21,17 +21,19 @@ $videos = $user->getVideos($user_info['id']);
     <div class="container">
         <div class="cards-grid-container">
         <?php foreach ($videos as $value) : ?>
-            <div class="card">
-                <?php if ($value['thumbnail']) : ?>
-                    <img src="uploads/thumbnails/<?php echo $value['thumbnail'];?>" class="card-img-top" alt="">
-                <?php else : ?>
-                    <img src="../assets/images/nopic.png" class="card-img-top" alt="">
-                <?php endif; ?>
-                <div class="card-body">
-                    <h5 class="card-title"><?php echo $value['title'];?></h5>
-                    <p class="card-text card-description"><?php echo $value['description'];?></p>
+            <a href="video-detail.php?vid=<?php echo $value['video_link'];?>" class="video-anchor">
+                <div class="card">
+                    <?php if ($value['thumbnail']) : ?>
+                        <img src="uploads/thumbnails/<?php echo $value['thumbnail'];?>" class="card-img-top" alt="">
+                    <?php else : ?>
+                        <img src="../assets/images/nopic.png" class="card-img-top" alt="">
+                    <?php endif; ?>
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $value['title'];?></h5>
+                        <p class="card-text card-description"><?php echo $value['description'];?></p>
+                    </div>
                 </div>
-            </div>
+            </a>
             <?php endforeach; ?>
         </div>        
     </div>

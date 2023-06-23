@@ -64,7 +64,13 @@ body{
 .little-container{
     width: 350px;
 }
-
 .mt-5rem{
     margin-top: 5rem;
+}
+.video-anchor{
+    color: inherit;
+}
+.video-anchor:hover{
+    text-decoration: none;
+    color: inherit;
 }

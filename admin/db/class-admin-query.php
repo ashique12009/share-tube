@@ -255,6 +255,8 @@ class ClassAdminQuery
                     id, user_id, title, description, video_link, thumbnail, category_id 
                 FROM
                     " . $table_name . " 
+                WHERE 
+                    status=1 
                 ORDER BY id DESC 
                 LIMIT
                     0,10";
