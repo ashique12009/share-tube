@@ -51,6 +51,7 @@
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             </form>
             <ul class="navbar-nav">
+                <li class="nav-item"><a href="profile.php" class="nav-link">Profile</a></li>
                 <li class="nav-item"><a href="logout.php" class="nav-link">Sign out</a></li>
             </ul>
         </div>
