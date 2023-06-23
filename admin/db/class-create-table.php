@@ -90,6 +90,7 @@ class ClassCreateTable
             `thumbnail` text NULL,
             `video_link` text NULL,
             `category_id` int(11) NOT NULL,
+            `status` int(1) NOT NULL DEFAULT 0, 
             `created_at` datetime NOT NULL,
             `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (`id`),
