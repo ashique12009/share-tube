@@ -49,7 +49,7 @@ class ClassUserQuery
         $role_id    = 2;
 
         $query = "SELECT
-                    id, role_id, email, name
+                    id, role_id, email, name, profile_photo 
                 FROM
                     " . $table_name . "
                 WHERE
@@ -61,6 +61,32 @@ class ClassUserQuery
 
         $stmt = $this->dbConnection->prepare($query);
         $stmt->bindParam(1, $email);
+        $stmt->bindParam(2, $role_id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $row;
+    }
+    
+    public function getUserInfoById($id)
+    {
+        $table_name = "users";
+        $role_id    = 2;
+
+        $query = "SELECT
+                    id, role_id, email, name, profile_photo 
+                FROM
+                    " . $table_name . "
+                WHERE
+                    id = ?
+                AND
+                    role_id = ?
+                LIMIT
+                    0,1";
+
+        $stmt = $this->dbConnection->prepare($query);
+        $stmt->bindParam(1, $id);
         $stmt->bindParam(2, $role_id);
         $stmt->execute();
 
@@ -236,6 +262,66 @@ class ClassUserQuery
             }
         }
         else 
+        {
+            return false;
+        }
+    }
+
+    public function updateUser($data, $user_id)
+    {
+        $table_name = "users";
+
+        try 
+        {
+            if ($data['pfile'] == '')
+            {
+                $query = "UPDATE
+                    " . $table_name . "
+                SET
+                    name=:name,
+                    email=:email 
+                WHERE 
+                    id=:id";
+            }
+            else 
+            {
+                $query = "UPDATE
+                    " . $table_name . "
+                SET
+                    name=:name,
+                    email=:email, 
+                    profile_photo=:profile_photo 
+                WHERE 
+                    id=:id";
+            }
+            
+
+            $stmt = $this->dbConnection->prepare($query);
+
+            // Posted values
+            $name  = htmlspecialchars(strip_tags($data['name']));
+            $email = htmlspecialchars(strip_tags($data['email']));
+            $pfile = htmlspecialchars(strip_tags($data['pfile']));
+
+            // Bind parameters
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':email', $email);
+            
+            if ($data['pfile'] != '')
+            {
+                $stmt->bindParam(':profile_photo', $pfile);
+            }                
+            
+            $stmt->bindParam(':id', $user_id);
+
+            // Execute the query
+            if ($stmt->execute())
+            {
+                return true;
+            }
+            return false;   
+        } 
+        catch (Exception $e) 
         {
             return false;
         }

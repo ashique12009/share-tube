@@ -42,6 +42,7 @@ class ClassCreateTable
             `role_id` int(11) NOT NULL,
             `name` varchar(32) NOT NULL,
             `email` varchar(128) NOT NULL,
+            `profile_photo` varchar(255) NULL,
             `password` varchar(255) NOT NULL,
             `created_at` datetime NOT NULL,
             `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
