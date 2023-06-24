@@ -250,11 +250,14 @@ class ClassAdminQuery
     public function getVideos()
     {
         $table_name = "videos";
+        $user_table_name = "users";
 
         $query = "SELECT
-                    id, user_id, title, description, video_link, thumbnail, category_id 
+                    videos.id, user_id, title, description, video_link, thumbnail, category_id, profile_photo 
                 FROM
                     " . $table_name . " 
+                INNER JOIN " . $user_table_name . " 
+                ON " . $table_name . ".user_id = " . $user_table_name . ".id 
                 WHERE 
                     status=1 
                 ORDER BY id DESC 
@@ -265,6 +268,37 @@ class ClassAdminQuery
         $stmt->execute();
 
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($rows)
+        {
+            return $rows;
+        }
+        return [];
+    }
+
+    public function getVideoByVlink($vfile)
+    {
+        $table_name = "videos";
+        $cat_table_name = "categories";
+
+        $query = "SELECT
+                    videos.id, user_id, title, description, video_link, thumbnail, category_id, name 
+                FROM
+                    " . $table_name . " 
+                INNER JOIN " . $cat_table_name . " 
+                ON " . $table_name . ".category_id = " . $cat_table_name . ".id 
+                WHERE 
+                    status=1 
+                    AND 
+                    video_link='" . $vfile . "' 
+                ORDER BY id DESC 
+                LIMIT
+                    0,1";
+
+        $stmt = $this->dbConnection->prepare($query);
+        $stmt->execute();
+
+        $rows = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($rows)
         {

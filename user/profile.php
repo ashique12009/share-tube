@@ -26,9 +26,9 @@ $page_title = 'Profile page';
                 <p class="card-text">Role: <?php echo $user_data['role_id'] == 2 ? 'User' : 'Admin';?></p>
 
                 <?php if (is_null($user_data['profile_photo']) || $user_data['profile_photo'] == "") :?>
-                    <img src="../assets/images/nopic.png" alt="profile-photo">
+                    <img src="../assets/images/nopic.png" alt="profile-photo" width="128">
                 <?php else: ?>
-                    <img src="<?php echo "uploads/profile/" . $user_data['profile_photo'];?>" alt="profile-photo">
+                    <img src="<?php echo "uploads/profile/" . $user_data['profile_photo'];?>" alt="profile-photo" width="128">
                 <?php endif;?>
 
                 <form class="mb-3" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>" enctype="multipart/form-data">

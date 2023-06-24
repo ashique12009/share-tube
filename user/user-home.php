@@ -28,8 +28,16 @@ $videos = $user->getVideos($user_info['id']);
                     <?php else : ?>
                         <img src="../assets/images/nopic.png" class="card-img-top" alt="">
                     <?php endif; ?>
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $value['title'];?></h5>
+                    
+                    <div class="card-body custom-card-body">
+                        <div class="photo-and-title-wrapper">
+                            <?php if ($value['profile_photo'] != "") : ?>
+                                <img src="<?php echo 'uploads/profile/' . $value['profile_photo'];?>" alt="profile-photo" class="loop-profile-image">
+                            <?php else : ?>
+                                <img src="../assets/images/nopic.png" alt="profile-photo" class="loop-profile-image">
+                            <?php endif; ?>
+                            <h5 class="card-title"><?php echo $value['title'];?></h5>
+                        </div>
                         <p class="card-text card-description"><?php echo $value['description'];?></p>
                     </div>
                 </div>

@@ -29,6 +29,7 @@ body{
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+    margin-left: 40px;
 }
 
 /* User login form */
@@ -73,4 +74,15 @@ body{
 .video-anchor:hover{
     text-decoration: none;
     color: inherit;
+}
+.custom-card-body{
+    padding-left: 0;
+}
+.loop-profile-image{
+    width: 32px;
+    object-fit: cover;
+    height: 32px;
+    border-radius: 15px;
+    float: left;
+    margin-right: 5px;
 }

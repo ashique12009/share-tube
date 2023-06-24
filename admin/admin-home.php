@@ -3,7 +3,7 @@ $page_title = 'Admin home';
 require_once 'admin-header.php';
 ?>
     <div class="container">
-        <h1 class="text-center">Welcome to your home</h1>
+        <h1 class="text-center">Welcome to your admin dashboard</h1>
     </div>
 
     <div class="container">

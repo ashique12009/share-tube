@@ -193,11 +193,14 @@ class ClassUserQuery
     public function getVideos($user_id)
     {
         $table_name = "videos";
+        $user_table_name = "users";
 
         $query = "SELECT
-                    id, user_id, title, description, video_link, thumbnail, category_id 
+                    videos.id, user_id, title, description, video_link, thumbnail, category_id, profile_photo 
                 FROM
                     " . $table_name . " 
+                INNER JOIN " . $user_table_name . " 
+                ON " . $table_name . ".user_id = " . $user_table_name . ".id 
                 WHERE user_id = $user_id 
                 ORDER BY id DESC 
                 LIMIT
