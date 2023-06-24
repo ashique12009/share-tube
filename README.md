@@ -1,7 +1,7 @@
 # share-tube
 A video sharing app by classic PHP
 
-###Few Screenshots:
+**Few Screenshots:**
 Welcome page:
 ![welcome](https://github.com/ashique12009/share-tube/assets/5427021/f7ae8882-3262-4c6d-a77c-38458a8382a1)
 User home page:
