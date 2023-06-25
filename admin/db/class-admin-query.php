@@ -330,4 +330,38 @@ class ClassAdminQuery
         }
         return [];
     }
+
+    public function getCategoryVideos($cat_id)
+    {
+        $table_name = "videos";
+        $user_table_name = "users";
+        $category_table_name = "categories";
+
+        $query = "SELECT
+                    videos.id, user_id, title, description, video_link, thumbnail, category_id, profile_photo 
+                FROM
+                    " . $table_name . " 
+                INNER JOIN " . $user_table_name . " 
+                ON " . $table_name . ".user_id = " . $user_table_name . ".id 
+                INNER JOIN " . $category_table_name . " 
+                ON " . $table_name . ".category_id = " . $category_table_name . ".id 
+                WHERE 
+                    status=1 
+                AND 
+                    ".$table_name.".category_id = " . $cat_id . "
+                ORDER BY id DESC 
+                LIMIT
+                    0,10";
+
+        $stmt = $this->dbConnection->prepare($query);
+        $stmt->execute();
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($rows)
+        {
+            return $rows;
+        }
+        return [];
+    }
 }

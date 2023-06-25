@@ -55,7 +55,7 @@
                     $categories = $admin->getRecentCategories();
                 ?>
                 <?php foreach($categories as $cat) : ?>
-                    <li class="nav-item"><a class="nav-link" href="#"><?php echo $cat['name'];?></a></li>
+                    <li class="nav-item"><a class="nav-link" href="category-list-page.php?id=<?php echo $cat['id'];?>"><?php echo $cat['name'];?></a></li>
                 <?php endforeach; ?>
             </ul>
             <form class="form-inline my-2 my-lg-0 mx-auto">
