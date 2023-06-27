@@ -253,13 +253,11 @@ class ClassAdminQuery
         $user_table_name = "users";
 
         $query = "SELECT
-                    videos.id, user_id, title, description, video_link, thumbnail, category_id, profile_photo 
+                    videos.id, user_id, title, description, video_link, thumbnail, category_id, profile_photo, status  
                 FROM
                     " . $table_name . " 
                 INNER JOIN " . $user_table_name . " 
                 ON " . $table_name . ".user_id = " . $user_table_name . ".id 
-                WHERE 
-                    status=1 
                 ORDER BY id DESC 
                 LIMIT
                     0,10";
@@ -397,5 +395,35 @@ class ClassAdminQuery
             return $rows;
         }
         return [];
+    }
+
+    function updateVideoStatus($operation, $video_id)
+    {
+        $table_name = "videos";
+
+        try {
+            if ($operation == 1)
+            {
+                $query = "UPDATE $table_name SET status=:status WHERE id=:video_id LIMIT 1";
+            }
+            else
+            {
+                $query = "UPDATE $table_name SET status=:status WHERE id=:video_id LIMIT 1";
+            }
+            $statement = $this->dbConnection->prepare($query);
+            $statement->bindParam(':status', $operation);
+            $statement->bindParam(':video_id', $video_id, PDO::PARAM_INT);
+            $query_execute = $statement->execute();
+    
+            if ($query_execute)
+            {
+                return true;
+            }
+            return false;  
+        } 
+        catch(PDOException $e) 
+        {
+            echo $e->getMessage();
+        }
     }
 }

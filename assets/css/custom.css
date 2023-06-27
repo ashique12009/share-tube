@@ -86,6 +86,8 @@ body{
     float: left;
     margin-right: 5px;
 }
+.red-text{color: red;}
+.green-text{color: green;}
 
 /* Admin CSS */
 .panel {

@@ -18,3 +18,5 @@ Admin dashboard:
 ![admin-home](https://github.com/ashique12009/share-tube/assets/5427021/7f8bf712-4dc4-447b-8754-3e073e31dab2)
 Admin category CRUD page:
 ![admin-category-crud](https://github.com/ashique12009/share-tube/assets/5427021/221de554-9951-463b-8bf7-a5231606eb86)
+Admin video approval page:
+![admin-approve-video](https://github.com/ashique12009/share-tube/assets/5427021/442f16bb-2f59-4ba3-ae84-3312d06d5324)
